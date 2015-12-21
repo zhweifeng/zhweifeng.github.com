@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+body{font-size:12px; line-height:12px;}
+h1,h2,h3,h4,h5,h6,strong,i,b,em{font-weight:normal;font-style:normal;}
+a{text-decoration:none; color:#000;}
+li{ list-style:none;}
+img{ border:0; vertical-align:top;}
+a img{ border:none;}
+table{border-collapse:collapse;}
+.fl{float:left;}
+.fr{float:right;}
+.clearfix:after{display:block; clear:both; content:'';}
+.clearfix{zoom:1;}
+/*      opacity:0.4;filter:alpha(opacity:40);     透明度*/
