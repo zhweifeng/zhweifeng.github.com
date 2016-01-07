@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>张伟峰-js-选项卡</title>
+	<link rel="stylesheet" type="text/css" href="../css/base.css" >
+	<style>
+		body{background: #000;}
+		.box { overflow:hidden; position:relative; width:600px; height:300px; margin:100px auto; }
+		li { list-style:none; }
+		ol { position:absolute; top:0; left:0; }
+		ol li { width:700px; height:400px; }
+
+		ul { position:relative; width:480px; margin:0 auto; margin-top:260px; z-index:1; background:green; }
+		ul li { float:left; margin:0 10px; width:100px; height:20px; background:#eee; } 
+		span { display:block; width:10px; height:100%; background:#999; }
+	</style>
+
+<script src="../js/base.js"></script>
+<script>
+	window.onload=function (){
+		var oOl=document.getElementById('ol1');
+		var h=oOl.children[0].offsetHeight;
+		var aSpan=document.getElementsByTagName('span');
+		var n=0;
+		
+		next();
+		
+		function next()
+		{
+			for (var i=0; i<aSpan.length; i++)
+			{
+				aSpan[i].style.width=0;
+			}
+			
+			move(aSpan[n%aSpan.length], {width:100}, {complete:function (){
+				n++;
+				move(oOl, {top:-h*(n%aSpan.length)});
+				next();
+				
+			}, duration:1000});
+		}
+		
+	};
+</script>
+</head>
+
+<body>
+	<div class="box">
+		<ol id="ol1">
+			<li><img src="img/00.jpg" alt=""></li>
+			<li><img src="img/01.jpg" alt=""></li>
+			<li><img src="img/02.jpg" alt=""></li>
+			<li><img src="img/03.jpg" alt=""></li>			
+		</ol>
+		
+		<ul>
+			<li><span></span></li>
+			<li><span></span></li>
+			<li><span></span></li>
+			<li><span></span></li>
+		</ul>
+	</div>
+</body>
+</html>

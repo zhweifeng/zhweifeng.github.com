@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>张伟峰-小效果</title>
+	<link rel="stylesheet" type="text/css" href="../css/base.css" >
+	<style>
+        #ul1{width:408px; height:32px; background:#ccc;  margin: 50px auto; position: relative; }
+        #ul1 li{ width:100px; height:30px; line-height: 30px; float:left; border: 1px solid #999;  text-align: center; position: relative; z-index: 2; }
+        #ul1 li.box{  position: absolute; left:0; top:0; background:#ff0; z-index: 1; opacity:0.6; } 
+        #div1{ width:200px; height:60px; background:#ccc; position: absolute; left: 0; top:0; color: #fff; text-align: center; line-height: 60px; font-weight: bold; font-size: 20px; }
+        #ball{ width:100px; height:100px; background:red; position: absolute; left: 10px; top:10px; border-radius: 50%; }
+    </style>
+<script src="../js/base.js"></script>
+<script src="js/nav.js"></script>
+</head>
+<body>
+	
+	<ul id="ul1">
+        <li>首页</li>
+        <li>联系我们</li>
+        <li>公司简介</li>
+        <li>产品展示</li>
+        <li class="box"></li>
+    </ul>
+    <div id="ball"></div>
+    <div id="div1">漂浮的广告</div>
+</body>
+</html>

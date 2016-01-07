@@ -27,10 +27,15 @@ body>div{
 	background:#666;
 }
 h2{
-	width:241px;
-	height:53px;
+	width:200px;
+	height:50px;
 	margin:20px auto;
 	cursor:pointer;
+	font-size: 40px;
+	line-height: 50px;
+	font-weight:bold;
+	text-align: center;
+	font-family:"Microsoft Yahei"；
 }
 table{
 	font-size:18px;
@@ -87,8 +92,11 @@ table td{
 	position: absolute;
 	left: 0;
 	top:200px;
-	background:yellow;
-	opacity:0.9;
+	background:rgba(102,102,204,0.6);
+	font-size: 30px;
+	text-align: center;
+	line-height: 200px;
+	color:#fff;
 }
 
 

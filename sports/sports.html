@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>张伟峰-js-分块运动</title>
+	<link rel="stylesheet" type="text/css" href="../css/base.css" >
+	<style>
+		body{background: #000;}
+		.main_rtr_tab{
+			width:700px;
+			height:400px;
+			margin:50px auto;
+			position:relative;
+		}
+		.main_rtr_pre{
+			position:absolute;
+			top:50%;
+			left:0;
+			width:70px;
+			height:110px;
+			margin-top: -55px;
+			background:url(img/left_tab.png);
+		}
+		.main_rtr_next{
+			position:absolute;
+			top:50%;
+			right:0;
+			width:70px;
+			height:110px;
+			margin-top: -55px;
+			background:url(img/right_tab.png);
+		}
+		.main_rtr_tab span{
+			background:url(img/02.jpg) no-repeat;
+			opacity:0;
+		}
+		.main_rtr_tab i{
+			font-style:normal;
+			z-index:99999;
+		}
+	</style>
+
+<script src="../js/base.js"></script>
+<script>
+	window.onload=function(){
+		var oDiv=document.getElementById('tab');
+		var oNext=document.getElementById('main_rtr_next');
+		var oPre=document.getElementById('main_rtr_pre');
+		var oImg=document.getElementById('img1');
+		
+		var Row=4;
+		var Col=7;
+		var W=700;
+		var H=400;
+		var aPath=['img/01.jpg','img/02.jpg','img/00.jpg'];
+		
+		var height=H/Row;
+		var width=W/Col;
+		var aSpan=[];
+		var bFlag=false;
+		
+		
+		for(var r=0; r<Row; r++){
+			
+			for(var c=0; c<Col; c++){
+				
+				var oSpan=document.createElement('span');
+				
+				oSpan.style.height=height+'px';
+				oSpan.style.width=width+'px';
+				
+				var left=c*width;
+				var top=r*height;
+				
+				oSpan.style.left=left+'px';
+				oSpan.style.top=top+'px'
+				oSpan.style.position='absolute';
+				oSpan.style.backgroundPosition=-left+'px -'+top+'px';
+				oDiv.appendChild(oSpan);
+				aSpan.push(oSpan);
+			}
+		}
+		
+		var now=0;  //当前点击次数
+		
+		oNext.onmouseover=function(){
+			oNext.style.cursor='pointer';
+		}
+		
+		oNext.onclick=function(){
+			
+			if (bFlag)
+			{
+				return;
+			}
+			
+			bFlag=true;
+			
+			now++;
+			var timer=null;
+			
+			for(var i=0; i<aSpan.length; i++){
+				
+				aSpan[i].style.opacity=0;
+				aSpan[i].style.backgroundImage='url('+aPath[now%aPath.length]+')';
+			}
+			
+			var n=0;  //第几个span
+			
+			clearInterval(timer);
+			timer=setInterval(function(){
+				
+				(function(index){
+					move(aSpan[n],{opacity:1},{
+						complete:function(){
+					
+							if(index == aSpan.length-1){
+								
+								oImg.src=aPath[now%aPath.length];
+								bFlag=false;	
+							}
+						}
+					});
+				})(n);
+				
+				
+				n++;
+				if(n == aSpan.length){
+					clearInterval(timer);
+				}
+			},100);
+		};
+		
+		oPre.onmouseover=function(){
+			oPre.style.cursor='pointer';
+		}
+		
+		oPre.onclick=function(){
+			
+			if (bFlag)
+			{
+				return;
+			}
+			
+			bFlag=true;
+			
+			now--;
+			if(now == -1){
+				
+				now=aPath.length-1;
+			}
+			var timer=null;
+			
+			for(var i=0; i<aSpan.length; i++){
+				
+				aSpan[i].style.opacity=0;
+				aSpan[i].style.backgroundImage='url('+aPath[now%aPath.length]+')';
+			}
+			
+			var n=0;  //第几个span
+			
+			clearInterval(timer);
+			timer=setInterval(function(){
+				
+				(function(index){
+					move(aSpan[n],{opacity:1},{
+						complete:function(){
+					
+							if(index == aSpan.length-1){
+								oImg.src=aPath[now%aPath.length];
+								bFlag=false;
+								
+							}
+						}
+					});
+				})(n);
+				
+				
+				n++;
+				if(n == aSpan.length){
+					clearInterval(timer);
+				}
+			},100);
+		};
+	};
+</script>
+</head>
+<body>
+	<div id="tab" class="main_rtr_tab">
+    	<img src="img/01.jpg"  id="img1">
+		<i id="main_rtr_pre" class="main_rtr_pre"></i>
+		<i id="main_rtr_next" class="main_rtr_next"></i>
+    </div>
+
+</body>
+</html>

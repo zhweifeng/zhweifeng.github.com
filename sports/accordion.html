@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>张伟峰-js-手风琴</title>
+	<link rel="stylesheet" type="text/css" href="../css/base.css" >
+	<style>
+		body{background: #000;}
+		.box { overflow:hidden; position:relative; width:780px; height:400px; margin:100px auto; }
+
+		li { position:absolute; top:0; left:0; width:700px; padding-left:20px; list-style:none; }
+		img { width:700px; height:400px; }
+		span { position:absolute; top:0; left:0; right:auto; width:20px; height:100%; }
+	</style>
+
+<script src="../js/base.js"></script>
+<script>
+window.onload=function (){
+	var aLi=document.getElementsByTagName('li');
+	var aSpan=document.getElementsByTagName('span');
+	var nLiW=aLi[0].offsetWidth;
+	var nSpanW=aSpan[0].offsetWidth;
+	
+	for(var i=0; i<aLi.length; i++){
+		if(i != 0){
+			aLi[i].style.left=720+(i-1)*20+'px';
+		}
+		
+		(function(index){
+			aSpan[i].onmouseover=function(){
+				for (var i=0; i<aLi.length; i++){
+					if(i<=index){
+						
+						(function(index){
+							var left=index*20;
+							
+							move(aLi[index],{left:left},{easing:Tween.Circ.easeOut});
+							//alert({left:left+'px'});
+						})(i);
+						
+					}else{
+						
+						(function(index){
+							var left=720+(index-1)*20;
+							move(aLi[index],{left:left},{easing:Tween.Circ.easeOut});
+						})(i);
+					}
+				}	
+			};
+		})(i);		
+	}
+	
+};
+</script>
+</head>
+
+<body>
+	<div class="box">
+		<ul>
+			<li>
+				<span style="background:#099;"></span>
+				<img src="img/00.jpg" />
+			</li>
+			
+			<li>
+				<span style="background:#cc6;"></span>
+				<img src="img/01.jpg" />
+			</li>
+			
+			<li>
+				<span style="background:#69f;"></span>
+				<img src="img/02.jpg" />
+			</li>
+			
+			<li>
+				<span style="background:#336;"></span>
+				<img src="img/03.jpg" />
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

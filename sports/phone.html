@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>张伟峰-手机桌面</title>
+	<link rel="stylesheet" type="text/css" href="../css/base.css" >
+	<style>
+		body{background: #000;}
+		#ul1{
+            width:426px;
+            margin: 80px auto;
+        }
+        #ul1 li{
+            width:100px; height:100px; background: #ccc; border: 1px solid #fff; float: left; margin: 20px; text-align: center; line-height: 100px;
+        }
+        #ul1 li.box{ border: 3px dashed #f60;}
+	</style>
+<script src="../js/base.js"></script>
+<script>
+	window.onload=function(){
+            var oUl=document.getElementById('ul1');
+            var aLi=oUl.children;
+
+            var zIndex=1000;
+
+            /*布局转化*/
+            var aPos=[];
+            for(var i=0; i<aLi.length; i++){
+                aPos[i]={
+                    left:aLi[i].offsetLeft,
+                    top:aLi[i].offsetTop
+                };
+            }
+
+            for(var i=0; i<aPos.length; i++){
+                aLi[i].style.left=aPos[i].left+'px';
+                aLi[i].style.top=aPos[i].top+'px';
+                aLi[i].style.position='absolute';
+                aLi[i].style.margin=0;
+            }
+
+            //调用拖拽函数
+            for(var i=0; i<aLi.length; i++){
+                drag(aLi[i]);
+                aLi[i].index=i;
+            }
+
+            /*拖拽函数*/
+            function drag(obj){
+                obj.onmousedown=function(ev){
+                    var oEvent=ev || event;
+                    var disX=oEvent.clientX-obj.offsetLeft;
+                    var disY=oEvent.clientY-obj.offsetTop;
+
+                    obj.style.zIndex=zIndex++;
+
+                    document.onmousemove=function(ev){
+                        var oEvent=ev || event;
+                        obj.style.left=oEvent.clientX-disX+'px';
+                        obj.style.top=oEvent.clientY-disY+'px';
+
+                        //检测碰撞
+                        var oNear=findNearest(obj);
+                        if(oNear && oNear!=obj){
+                            var n=obj.index;
+                            var m=oNear.index;
+
+                            if(n<m){
+                                for(var i=0; i<aLi.length; i++){
+                                    if(aLi[i].index>=n+1 && aLi[i].index<=m){
+                                        aLi[i].index--;
+                                        move(aLi[i],aPos[aLi[i].index]);
+                                    }
+                                }
+                                obj.index=m;
+                            }else{
+                                for(var i=0; i<aLi.length; i++){
+                                    if(aLi[i].index>=m && aLi[i].index<=n-1){
+                                        aLi[i].index++;
+                                        move(aLi[i],aPos[aLi[i].index]);
+                                    }
+                                }
+                                obj.index=m;
+                            }
+                        }
+                    };
+
+                    document.onmouseup=function(){
+                        document.onmousemove=null;
+                        document.onmouseup=null;
+
+                        move(obj,aPos[obj.index]);
+                    };
+                    return false;
+                };
+            }
+            /*找离物体最近的li*/
+            function findNearest(obj){
+                var iMin=999999999999;
+                var iMinIndex=-1;
+                for(var i=0; i<aLi.length; i++){
+                    //if(obj==aLi[i])continue; //?
+                    if(collTest(obj,aLi[i])){
+                        var dis=getDis(obj,aLi[i]);
+
+                        if(dis<iMin){
+                            iMin=dis;
+                            iMinIndex=i;
+                        }
+                    }
+                }
+
+                if(iMinIndex==-1){
+                    return null;
+                }else{
+                    return aLi[iMinIndex];
+                }
+            }
+            /*求距离*/
+            function getDis(obj,obj2){
+                var l1=obj.offsetLeft+obj.offsetWidth/2;
+                var l2=aPos[obj2.index].left+obj2.offsetWidth/2;
+
+                var t1=obj.offsetTop+obj.offsetHeight/2;
+                var t2=aPos[obj2.index].top+obj2.offsetHeight/2;
+
+                var a=l1-l2;
+                var b=t1-t2;
+
+                return Math.sqrt(a*a+b*b);
+            }
+            /*碰撞检测函数*/
+            function collTest(obj,obj2){
+                var l1=obj.offsetLeft;
+                var r1=obj.offsetLeft+obj.offsetWidth;
+                var t1=obj.offsetTop;
+                var b1=obj.offsetTop+obj.offsetHeight;
+
+                var l2=aPos[obj2.index].left;
+                var r2=aPos[obj2.index].left+obj2.offsetWidth;
+                var t2=aPos[obj2.index].top;
+                var b2=aPos[obj2.index].top+obj2.offsetHeight;
+
+                if(r1<l2 || l1>r2 || b1<t2 || t1>b2){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        };
+</script>
+</head>
+<body>
+	<ul id="ul1">
+	    <li>0</li>
+	    <li>1</li>
+	    <li>2</li>
+	    <li>3</li>
+	    <li>4</li>
+	    <li>5</li>
+	    <li>6</li>
+	    <li>7</li>
+	    <li>8</li>
+	</ul>
+</body>
+</html>

@@ -226,7 +226,7 @@
 		{
 			start[name]=parseFloat(getStyle(obj, name));
 			
-			if(isNaN(start[name])){//css的style 没给样式是时候需要这个判断
+			if(isNaN(start[name])){//css的style 没给样式的时候需要这个判断
 				switch(name){
 					case 'left':
 						start[name]=obj.offsetLeft;
@@ -279,7 +279,7 @@
 		}, 30);
 	}
 	
-	//版权 张伟峰©, 保留所有权利
+	//版权 ©, 保留所有权利
 	//t  当前时间
 	//b  初始值
 	//c  总距离

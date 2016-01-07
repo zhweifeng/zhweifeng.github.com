@@ -1,5 +1,6 @@
 $(function(){
 	//page2页图的变化
+	var timer=null;
 	$('.page2 h2,').toggle(function(){
 		$(this).parent().css('z-index',2);
 		var _this=$(this);
@@ -31,7 +32,7 @@ $(function(){
 		});	
 	});
 	
-	//跑马灯
+	//轮播图
 	var pmd=$('.marquee ul');
 	
 	//pmd.get(0).innerHTML+=pmd.get(0).innerHTML;
@@ -39,11 +40,15 @@ $(function(){
 	//以上两个都对 第一个是原生js 
 	pmd.append(pmd.html());
 	
-	var timer=null;
+	
 	var now=0;
 	var bFlag=true;	
 	
-	if(bFlag){timer=setInterval(noseam,30);}
+	if(bFlag){
+		timer=setInterval(noseam,30);
+	}else{
+		clearInterval(timer);
+	}
 
 	bFlag=false;
 
@@ -52,13 +57,7 @@ $(function(){
 		if(now>=(pmd.width()/2)){now=0};
 		pmd.css('left',-now);
 	}
-	
-	pmd.mouseover(function(){
-		clearInterval(timer);
-	});
-	pmd.mouseout(function(){
-		timer=setInterval(noseam,30);
-	});
+	pmd.hover(function(){clearInterval(timer);},function(){timer=setInterval(noseam,30);});
 	//page3，page4页图的变化
 	$('.page3 h2,.page4 h2').toggle(function(){
 		$(this).parent().css('z-index',2);
