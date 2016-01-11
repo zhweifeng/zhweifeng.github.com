@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>张伟峰-3D颗粒翻转</title>
+	<link rel="stylesheet" type="text/css" href="../css/base.css" >
+	<style>
+		html,body{  height:100%;  overflow: hidden;  }
+        body{ background: -webkit-linear-gradient(#339999,#9c9c9c); }
+        .box{  width:700px;  height:400px; margin: 50px auto; position: relative; }
+        .box span{  position: absolute; transform-style: preserve-3d; }
+        .box span em{  position: absolute; left: 0; top: 0; width:100%; height:100%; }
+        .box span .front{  background: url("img/00.jpg") no-repeat; transform:translateZ(1px);  }
+        .box span .back{ background:url("img/01.jpg") no-repeat; transform:translateZ(-1px) scale(-1,1); }
+	</style>
+<script>
+window.onload=function(){
+    var oBox=document.querySelector('.box');
+
+    var R=4;
+    var C=7;
+
+    for(var r=0; r<R; r++){
+        for(var c=0; c<C; c++){
+            var oSpan=document.createElement('span');
+            oSpan.style.width=oBox.offsetWidth/C+'px';
+            oSpan.style.height=oBox.offsetHeight/R+'px';
+            oBox.appendChild(oSpan);
+
+            oSpan.style.left=c*oSpan.offsetWidth+'px';
+            oSpan.style.top=r*oSpan.offsetHeight+'px';
+
+            //给span加面
+            oSpan.innerHTML='<em class="front"></em><em class="back"></em>';
+            oSpan.children[0].style.backgroundPosition=-c*oSpan.offsetWidth+'px '+-r*oSpan.offsetHeight+'px';
+            oSpan.children[1].style.backgroundPosition=-c*oSpan.offsetWidth+'px '+-r*oSpan.offsetHeight+'px';
+
+            oSpan.dataset.r=r;
+            oSpan.dataset.c=c;
+        }
+    }
+
+    //点击
+    var iNow=0;
+    var bReady=true;
+    oBox.onclick=function(){
+        if(bReady==false){
+            return;
+        }
+        bReady=false;
+
+        var aSpan=oBox.children;
+
+        iNow++;
+
+        for(var i=0; i<aSpan.length; i++){
+            var delayTime=(parseInt(aSpan[i].dataset.r)+parseInt(aSpan[i].dataset.c))*200;
+
+            aSpan[i].style.transition='.4s all ease '+delayTime+'ms';
+
+            aSpan[i].style.transform='perspective(800px) rotateY(180deg)';
+        }
+
+        //最后一个运动结束
+        aSpan[aSpan.length-1].addEventListener('transitionend',function(){
+            //瞬间回去
+            for(var i=0; i<aSpan.length; i++){
+                aSpan[i].style.transition='none';
+                aSpan[i].style.transform='perspective(800px) rotateY(0deg)';
+
+                //换图
+                aSpan[i].children[0].style.backgroundImage='url(img/0'+iNow%3+'.jpg)';
+                aSpan[i].children[1].style.backgroundImage='url(img/0'+(iNow+1)%3+'.jpg)';
+            }
+            bReady=true;
+        },false)
+    };
+};
+</script>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>

@@ -35,12 +35,15 @@ h2{
 	line-height: 50px;
 	font-weight:bold;
 	text-align: center;
-	font-family:"Microsoft Yahei"；
+	color: #000;
+	font-family:"Microsoft Yahei";
+	text-shadow:2px 2px 4px #fff;
+	-webkit-box-reflect:below 5px -webkit-linear-gradient(rgba(255,0,0,0) 10%,rgba(255,255,255,0.5));
 }
 table{
 	font-size:18px;
 	line-height: 30px;
-    margin: 20px auto 0;
+    margin: 50px auto 0;
     width: 240px;
 }
 table td{
@@ -54,7 +57,7 @@ table td{
 	padding:10px 0;
 	border:1px solid #0CF;
 	background:#ccc;
-	margin:50px auto 0;
+	margin:70px auto 0;
 	height:100px;
 	position:relative;
 }
@@ -98,6 +101,82 @@ table td{
 	line-height: 200px;
 	color:#fff;
 }
+/* page5 */
+.h5{
+	width:660px;
+	margin:50px auto 0;
+	display:none;
+}
+.h5 .box{
+	float: left;
+	width: 200px;
+	height: 200px;
+	margin: 10px;
+	cursor:pointer;
+
+	transform-style: preserve-3d;
+    transform:perspective(800px) rotateY(0deg);
+    transition: 1s all ease;
+}
+.h5 .box div{
+    width:100%;
+    height: 100%;
+    position:absolute;
+    left: 0;
+    top: 0;
+            
+            
+}
+.box .front{
+    background: #399;
+    transform: translateZ(1px);
+}
+.box .back{
+    background: #96c;
+    transform: translateZ(-1px) scale(-1,1);
+}
+.box .back a{
+	display: block;
+	width: calc(100% - 30px);
+	height: calc(100% - 30px);
+	padding: 15px;
+	font-size: 16px;
+	line-height: 24px;
+	color: #fff;
+}
+/*.h5 .box:hover{
+	cursor:pointer;
+    transform:perspective(800px) rotateY(-180deg);
+}*/
+#page3{
+    font-size: 26px;
+    font-weight: bolder;
+    font-family:微软雅黑;
+    padding: 50px;
+}
+#page3 span{ 
+	color:rgba(0,0,0,0); 
+	text-shadow: 0 0 100px #fff; 
+	opacity: 0; transition: .4s all ease;
+}
+#page3 span.on{ 
+	opacity: 1; 
+	text-shadow: 0 0 0 #fff;
+	line-height: 36px;
+}
+.play { width: 470px; height: 150px; overflow: hidden; position: relative; margin: 70px auto 0; }
+.play ol { position: absolute; right: 5px; bottom: 5px; z-index: 2; }
+.play ol li { float: left; opacity: 0.8; display: inline; cursor: pointer; background: #fcf2cf; border: 1px solid #f47500; padding: 2px 6px; margin:3px; color: #d94b01; font-family: arial; font-size: 12px; transition: .4s all ease;}
+.play .active { font-weight: bold; color: #ffffff; background: #ffb442; }
+
+.play ul { position: absolute; top: 0; left: 0; z-index: 1; transition: .4s all cubic-bezier(0.66,-0.84, 0.39, 1.9);}
+.play ul li { width: 470px; height: 150px; float: left; }
+
+
+
+
+
+
 
 
 

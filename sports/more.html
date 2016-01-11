@@ -5,17 +5,28 @@
 	<title>张伟峰-小效果</title>
 	<link rel="stylesheet" type="text/css" href="../css/base.css" >
 	<style>
+        body{ background: #ecfaff;}
         #ul1{width:408px; height:32px; background:#ccc;  margin: 50px auto; position: relative; }
         #ul1 li{ width:100px; height:30px; line-height: 30px; float:left; border: 1px solid #999;  text-align: center; position: relative; z-index: 2; }
         #ul1 li.box{  position: absolute; left:0; top:0; background:#ff0; z-index: 1; opacity:0.6; } 
         #div1{ width:200px; height:60px; background:#ccc; position: absolute; left: 0; top:0; color: #fff; text-align: center; line-height: 60px; font-weight: bold; font-size: 20px; }
-        #ball{ width:100px; height:100px; background:red; position: absolute; left: 10px; top:10px; border-radius: 50%; }
+        #ball{ width:90px; height:100px; background:red; position: absolute; left: 10px; top:10px; border-radius: 50%;font-size: 20px; color: #fff; line-height: 100px; padding-left:10px; cursor: pointer;}
+        #ul2{ margin: 50px auto; width:408px;}
+        #ul2 li{ float: left; width:100px; height: 30px; text-align: center; line-height: 30px; color: #fff; margin: 0 1px; cursor: pointer; transition: .4s all ease;}
+        #ul2 li:hover{ border-radius: 4px 30px; transform: rotate(60deg);}
+        @keyframes rotate {
+            to{
+                transform: rotate(-360deg);
+            }
+        }
+        .box{  width:205px;  height:208px; background: url("img/che.png") no-repeat; transform: rotate(0deg); position: absolute;  top: 10px; right: 50px; cursor: pointer;}
+        .rotate{ animation-name: rotate; animation-duration: 2s; animation-timing-function: linear; animation-iteration-count: infinite; animation-direction: alternate; }
+        .rotate:hover{ animation-play-state: paused; }
     </style>
 <script src="../js/base.js"></script>
 <script src="js/nav.js"></script>
 </head>
-<body>
-	
+<body>	
 	<ul id="ul1">
         <li>首页</li>
         <li>联系我们</li>
@@ -23,7 +34,14 @@
         <li>产品展示</li>
         <li class="box"></li>
     </ul>
-    <div id="ball"></div>
+    <ul id="ul2">
+        <li style="background: #399;">首页</li>
+        <li style="background: rgb(128,128,128);">联系我们</li>
+        <li style="background: #f60;">公司简介</li>
+        <li style="background: #f30;">产品展示</li>
+    </ul>
+    <div id="ball">点击扔我</div>
     <div id="div1">漂浮的广告</div>
+    <div class="box rotate"></div>
 </body>
 </html>

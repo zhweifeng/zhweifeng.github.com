@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>张伟峰-倒影</title>
+    <link rel="stylesheet" type="text/css" href="../css/base.css" >
+    <style>
+        body {overflow:hidden; background:#000;}
+        #div1 {width:480px; height:316px; position:absolute; left:50%; top:45%; margin-left:-240px; margin-top:-208px;}
+        #ul1 {width:100%; height:100%; position:relative; z-index:1;}
+        #ul1 li {width:100%; height:100%; position:relative; list-style:none; overflow:-hidden; position:absolute; left:0; top:0; -webkit-transform:perspective(1100px) rotateY(0deg); z-index:1; opacity:0; box-shadow:0 4px 14px rgba(0,0,0,0.6); -webkit-transition:1s all ease; cursor:pointer;-webkit-box-reflect: below 10px -webkit-linear-gradient(rgba(255,255,255,0) 45%, rgba(255,255,255,0.5));}
+        #ul1 .cur {z-index:4; opacity:1; -webkit-transform:scale(1);z-index:99;}
+        #ul1 .active {z-index:4; opacity:1; -webkit-transform:translateY(40px) scale(2); z-index:99;}
+        #ul1 .left, #ul1 .right {z-index:3; opacity:0.7;}
+        #ul1 .left2, #ul1 .right2 {z-index:2; opacity:0;}
+
+        #ul1 .left {  -webkit-transform:perspective(1100px) translate(-300px, 10px) rotateY(60deg) scale(0.9); }
+        #ul1 .right {  -webkit-transform:perspective(1100px) translate(300px, 10px) rotateY(-60deg) scale(0.9); }
+        #ul1 .left2 { -webkit-transform:perspective(1100px) translate(-400px, 10px) rotateY(60deg) scale(0.9); }
+        #ul1 .right2 { -webkit-transform:perspective(1100px) translate(400px, 10px) rotateY(-60deg) scale(0.9);  }
+        #ul1 li img {position:absolute; width:480px; height:260px; left:0; top:42px;}
+        #div1 .btn { position:absolute; width:100%; height:22px; text-align:center; left:0; top:-42px; z-index:2;}
+        #div1 .btn a {width:22px; height:22px; background:url(img/arrows.png) no-repeat; display:inline-block; -webkit-transform:scale(1); -webkit-transition:0.5s all ease;opacity:0.7;}
+        #div1 .btn a:hover {-webkit-transform:scale(1.4); opacity:1;}
+        #div1 .btn .prev {background-position:left;}
+        #div1 .btn .next {background-position:right;}
+    </style>
+<script>
+ window.onload=function (){
+
+    var oDiv=document.getElementById('div1');
+    var oUl=document.getElementById('ul1');
+    var aLi=oUl.getElementsByTagName('li');
+    var i=0;
+    var iNow=0;
+    var aA=oDiv.getElementsByTagName('a');
+    var ready=true;
+    var wait=0;
+    
+    aA[0].onclick=function ()
+    {
+        tab((iNow-1+aLi.length)%aLi.length);
+    };
+    
+    aA[1].onclick=function ()
+    {
+        tab((iNow+1)%aLi.length);
+    };
+    
+    var arr=[{b: 'webkit', e: 'webkitTransitionEnd'}, {b: 'firefox', e: 'transitionend'}];
+    
+    function tEnd(ev){
+        var obj=ev.srcElement||ev.target;
+        if(obj.tagName!='LI')return;
+        wait--;
+        if(wait<=0)ready=true;
+    }
+    
+    for(var i=0;i<arr.length;i++)
+    {
+        if(navigator.userAgent.toLowerCase().search(arr[i].b)!=-1)
+        {
+            document.addEventListener(arr[i].e, tEnd, false);
+            break;
+        }
+    }
+    
+    function m(n){return (n+aLi.length)%aLi.length;}
+    
+    function tab(now)
+    {
+        if(!ready)return;
+        ready=false;
+        
+        iNow=now;
+        
+        wait=aLi.length;
+        
+        for(var i=0;i<aLi.length;i++)
+        {
+            aLi[i].className='';
+            aLi[i].onclick=null;
+        }
+        aLi[m(iNow-2)].className='left2';
+        aLi[m(iNow-1)].className='left';
+        aLi[iNow].className='cur';
+        aLi[m(iNow+1)].className='right';
+        aLi[m(iNow+2)].className='right2';
+        
+        setEv();
+    }
+    
+    setEv();
+    
+    function setEv()
+    {
+        var scaled=false;
+        aLi[m(iNow-1)].onclick=aA[0].onclick;
+        aLi[iNow].onclick=function ()   //放大
+        {
+            if(scaled)
+            {
+                this.className='active';
+            }
+            else
+            {
+                this.className='cur';
+            }
+            scaled=!scaled;
+        };
+        aLi[m(iNow+1)].onclick=aA[1].onclick;
+    }
+    
+    document.onkeydown=function (ev)
+    {
+        var oEvent=ev||event;
+        
+        switch(oEvent.keyCode)
+        {
+            case 37:    //←
+                aA[0].onclick();
+                break;
+            case 39:    //→
+                aA[1].onclick();
+                break;
+        }
+    };
+    
+    var autoPlayTimer=null;
+    
+    oDiv.onmouseout=function ()
+    {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer=setInterval(function (){
+            aA[1].onclick();
+        }, 3000);
+    };
+    oDiv.onmouseover=function ()
+    {
+        clearInterval(autoPlayTimer);
+    };
+    
+    oDiv.onmouseout();
+    
+};
+</script>
+</head>
+<body>
+    <div id="div1">
+    <ul id="ul1">
+        <li class="cur"><img src="img/1.jpg" /></li>
+        <li class="right"><img src="img/2.jpg" /></li>
+        <li class="right2"><img src="img/3.jpg" /></li>
+        <li><img src="img/4.jpg" /></li>
+        <li><img src="img/5.jpg" /></li>
+        <li><img src="img/6.jpg" /></li>
+        <li><img src="img/7.jpg" /></li>
+        <li><img src="img/8.jpg" /></li>
+        <li><img src="img/9.jpg" /></li>
+        <li><img src="img/10.jpg" /></li>
+        <li class="left2"><img src="img/11.jpg" /></li>
+        <li class="left"><img src="img/12.jpg" /></li>
+    </ul>
+    <div class="btn">
+        <a class="prev" href="javascript:;"></a>
+        <a class="next" href="javascript:;"></a>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
